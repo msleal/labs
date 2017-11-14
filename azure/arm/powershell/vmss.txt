@@ -1,0 +1,9 @@
+$vmssObject = Get-AzureRmResource -ResourceGroupName VMSSDASHBR -ResourceType Microsoft.Compute/virtualMachineScaleSets -ResourceName vmssdash -ApiVersion 2016-04-30-preview
+$vmssObject
+
+$PropertiesObject = @{
+     name="Standard_A2"; tier="Standard"; capacity=3
+}
+Set-AzureRmResource -sku $PropertiesObject -ResourceGroupName VMSSDASHBR -ResourceType Microsoft.Compute/virtualMachineScaleSets -ResourceName vmssdash -ApiVersion 2016-04-30-preview -Force
+
+$vmssObject | set-azurermresource -Force

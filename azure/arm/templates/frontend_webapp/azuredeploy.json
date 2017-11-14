@@ -1,0 +1,111 @@
+{
+  "$schema":"http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion":"1.0.0.0",
+  "parameters":{
+    "siteName":{
+      "type":"string"
+    },
+    "hostingPlanId":{
+      "type":"string"
+    },
+    "webAppAnalytics":{
+      "type":"string",
+      "defaultValue":"xxx"
+    },
+    "apiAppCThost":{
+      "type":"string"
+    },
+    "apiAppCTdflt":{
+      "type":"string"
+    },
+    "apiAppTZhost":{
+      "type":"string"
+    },
+    "apiAppTZdflt":{
+      "type":"string"
+    },
+    "location":{
+      "type":"string"
+    },
+    "sku":{
+      "type":"string",
+      "allowedValues":[
+        "Free",
+        "Shared",
+        "Basic",
+        "Standard"
+      ],
+      "defaultValue":"Basic"
+    },
+    "repoURL": {
+      "type": "string",
+      "metadata": {
+        "description": "The Git Repository you wish to use with this WEB app. The name must contain at least 8 characters and no more than 50 characters."
+      }
+    },
+    "repoBranch": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Git Repository Branch you wish to use with this WEB app. The name must contain at least 8 characters and no more than 50 characters."
+      }
+    },
+    "workerSize":{
+      "type":"string",
+      "allowedValues":[
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue":"1"
+    }
+  },
+  "resources":[
+    {
+      "type":"Microsoft.Web/sites",
+      "apiVersion":"2015-04-01",
+      "name":"[parameters('siteName')]",
+      "location":"[parameters('location')]",
+      "properties":{
+        "serverFarmId":"[parameters('hostingPlanId')]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "CTHOST",
+              "value": "[parameters('apiAppCThost')]"
+            },
+            {
+              "name": "CTDFLT",
+              "value": "[parameters('apiAppCTdflt')]"
+            },
+            {
+              "name": "TZHOST",
+              "value": "[parameters('apiAppTZhost')]"
+            },
+            {
+              "name": "ANALYTICS",
+              "value": "[parameters('webAppAnalytics')]"
+            },
+            {
+              "name": "TZDFLT",
+              "value": "[parameters('apiAppTZdflt')]"
+            }
+          ]
+        }
+      },
+      "resources":[
+        {
+          "type":"sourcecontrols",
+          "apiVersion":"2015-08-01",
+          "name":"web",
+          "dependsOn":[
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties":{
+            "RepoUrl":"[parameters('repoURL')]",
+            "branch":"[parameters('repoBranch')]"
+          }
+        }
+      ]
+    }
+  ]
+}

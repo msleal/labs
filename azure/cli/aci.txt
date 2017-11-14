@@ -1,0 +1,12 @@
+#List...
+az container list
+
+#Create the resource group if needed...
+az group create --name ACI --location brazilsouth
+
+#One...
+az container create --resource-group aci --name example --location eastus --ip-address public --image msleal/aci --output json
+
+#Ten
+x=0; while [ $x -le 9 ]; do az container create --resource-group aci --name example$x --location eastus --ip-address public --image msleal/aci --output json >/dev/null; if [ $? -eq 0 ]; then echo "Container $x created."; fi; let x=x+1; done
+x=0; while [ $x -le 9 ]; do az container delete --resource-group aci --name example$x --yes --output json>/dev/null; if [ $? -eq 0 ]; then echo "Container $x deleted."; fi; let x=x+1; done

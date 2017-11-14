@@ -1,0 +1,49 @@
+{
+  "name": "nodejs_apiapp",
+  "description": "NodeJS REST Service for NoSQL Servers",
+  "version": "0.0.4",
+  "author": "Marcelo Leal <msl@eall.com.br>",
+  "main": "server.js",
+  "directories": {
+    "lib": "./lib"
+  },
+  "keywords": [
+    "documentdb",
+    "mongodb",
+    "mongo",
+    "nosql",
+    "server",
+    "db",
+    "rest",
+    "database",
+    "restful",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/msleal/nodejs_apiapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/msleal/nodejs_apiapp/issues"
+  },
+  "dependencies": {
+    "mongodb": "1.2.x",
+    "restify": "2.3.x",
+    "documentdb": "1.4.x"
+  },
+  "devDependencies": {
+    "supertest": "0.5.x",
+    "mocha": "1.8.x"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha -R spec"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "server": "./bin/server"
+  }
+}

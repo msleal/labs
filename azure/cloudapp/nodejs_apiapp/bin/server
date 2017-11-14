@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+/**
+ * Copyright 2015 Marcelo Leal. All Rights Reserved.
+ * Copyright 2013 Ricard Aspeljung. All Rights Reserved.
+ *
+ * bin/nodejs_apiapp
+ */
+
+
+var nodejs_apiapp = require('../server');

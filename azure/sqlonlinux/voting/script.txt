@@ -1,0 +1,21 @@
+## Start Tunnel SSH
+tunnel-sqlonlinux.sh start
+
+## SQL Demo Shell
+ssh vmssdash.brazilsouth.cloudapp.azure.com
+sudo su -
+cd demos/example-voting-app
+docker image list
+grep -A 7 ^Architecture README.md
+time docker-compose start
+python load.py 1000
+cat dbtest.sh
+clear
+docker-compose stop
+exit
+exit
+
+## Stop Tunnel SSH
+tunnel-sqlonlinux.sh stop
+clear
+

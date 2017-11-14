@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Aroundcornersworldapp by msleal</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>AroundCornersWorldApp</h1>
+        <h2>AroundCorners World Application - Project Home Page</h2>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h3>
+<a id="welcome-to-aroundcorners-world-application-home-page" class="anchor" href="#welcome-to-aroundcorners-world-application-home-page" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to <strong>AroundCorners</strong> World Application Home Page!</h3>
+
+<p><img src="http://aroundcorners.azureedge.net/assets/images/earth.jpg" alt="AroundCorners World App LOGO"></p>
+
+<p>Access ArouncCorners World Application DEMO <a href="http://aroundcornersworldapp.azurewebsites.net/">here</a> </p>
+
+<p><strong>Project Name</strong>: AroundCornersWorldApp </p>
+
+<p><strong>Intention</strong>: This project objective is to demonstrate the benefits and easy of use of the Microsoft Azure App Services (PaaS Platform), as well as how to use it in combination with Azure Resource Manager Templates to the environment automation (creation, update and etc), and integration with Github (for Continuous Deployment). </p>
+
+<p><strong>Motivation</strong>: To help users/developers that want to to learn how create a web application composed of many services and different programming languages, all linked/backed by github repositories for continuous deployment, and without the burden of environment administration (e.g.: Operating System install/upgrade, web server setup, and etc). </p>
+
+<p><strong>Aplicability</strong>: This assets can be used by Developers, DevOps and Application Architects. </p>
+
+<p><strong>Structure</strong>: </p>
+
+<p>1 - A <em>Database</em> (Azure PaaS - NoSQL Database); </p>
+
+<p><em>AroundCornersDB</em> - DocumentDB; </p>
+
+<p>2 - Two Microservices (Azure PaaS - App Service/API App): </p>
+
+<p><em>AroundCornersCityLocatorAPI</em> - Implemented in NodeJS; </p>
+
+<p><em>AroundCornersTimezoneAPI</em> - Implemented in PHP; </p>
+
+<p>3 - A WEB Frontend (Azure PaaS - App Service/WEB App): </p>
+
+<p><em>AroundCornersWorldApp</em> - Implemented in PHP; </p>
+
+<p><strong>Related Assets</strong>: </p>
+
+<p><a href="https://azure.microsoft.com/en-us/documentation/articles/app-service-value-prop-what-is/">What is App Service</a> </p>
+
+<p><a href="https://azure.microsoft.com/en-us/documentation/services/app-service/">App Service Documentation</a> </p>
+
+<p><a href="https://tryappservice.azure.com/">Try App Service</a> </p>
+
+<p><a href="https://azure.microsoft.com/en-us/blog/introducing-app-service-environment/">App Service Environment</a> </p>
+
+<h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>This is a <strong>personal</strong> and <strong>independent</strong> project created solely for the purpose of Cloud education and sharing of architectural designs for cloud application deployments, recommended good practices, and showcase:</p>
+
+<p>1) Important concepts around modern application structure and deployments on the Cloud; </p>
+
+<p>2) How to leverage automation features (e.g.: flexibility and predictability) that declarative languages such as Azure JSON Templates (ARM) provides; </p>
+
+<p>3) The benefits of Platform as a Service (PaaS) over Infrastructure as a Service (IaaS), from the point of view of: easy-of-use, focus on your code, no handling of Operating System patches/upgrades, bootstrap/configuration of the environment (e.g.: NodeJS installation, configuration and/or WEB Server setup), and etc; </p>
+
+<p>4) How developers can use the power of Azure PaaS Cloud Services to just focus on their code, as all (continuous) deployments and production code can be backed/linked to GIT repositories. All you need is a <strong>Microsoft Azure Subscription</strong>, a <strong>JSON template</strong>, and <strong>your code</strong> (that can be on your local repository, Azure built-in or on Github); </p>
+
+<p>5) How to use NoSQL Databases and show different use cases for this technology, opposed to just go with SQL DB's in scenarios where they are not needed or even should be avoided.</p>
+
+<blockquote>
+<p>In the end, all you need to know is your favorite programming language (e.g.: NodeJS) and JSON (what I think every programmer eats for the breakfast)!</p>
+
+<p>After you have deployed the whole application (what you do just with JSON files), you will be able to just work on your code (e.g.: on github.com), and everytime you push to your master branch (or any other branch you choose to it), your code will be automatically deployed on Azure! </p>
+</blockquote>
+
+<h2>
+<a id="the-aroundcorners-source-code" class="anchor" href="#the-aroundcorners-source-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>The AroundCorners' SOURCE CODE:</h2>
+
+<p>Here you have the actual repositories (source code) of each service above. You just need to fork/clone it, and you are ready to go!  </p>
+
+<h3>
+<a id="database" class="anchor" href="#database" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>Database</em>
+</h3>
+
+<p><a href="https://github.com/msleal/nosql_documentdb">Code Repository</a> | <a href="https://github.com/msleal/arm_templates/tree/master/nosqldb_scripts">JSON ARM Template</a> </p>
+
+<p>This is the Database for one of our microservices (<em>AroundCornersCityLocatorAPI</em>). It is a "static" DB that is loaded from a dump downloaded from GeoNames.org. As I believe cities do not change locations, after the first load there is no procedure to update it. But for sure an Azure WebJob or similar service could be used to load a new dump every day or so... one of the use cases that I can think of are new cities (the dump used here is for cities around a certain population). The database is normalized to lowercase.</p>
+
+<h3>
+<a id="aroundcornerscitylocatorapi" class="anchor" href="#aroundcornerscitylocatorapi" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>AroundCornersCityLocatorAPI</em>
+</h3>
+
+<p><a href="https://github.com/msleal/nodejs_apiapp">Code Repository</a> | <a href="https://github.com/msleal/arm_templates/tree/master/nodejs_apiapp">JSON ARM Template</a> </p>
+
+<p>This NodeJS application provides the coordinates (Latitude and Longitude) of a city on globe. As one of the services of our World Application is to point a arbitrary city on the earth's map, we use this API to tell us the coordinates of any given city the user requests. </p>
+
+<h3>
+<a id="aroundcornerstimezoneapi" class="anchor" href="#aroundcornerstimezoneapi" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>AroundCornersTimezoneAPI</em>
+</h3>
+
+<p><a href="https://github.com/msleal/timezone_apiapp">Code Repository</a> | <a href="https://github.com/msleal/arm_templates/tree/master/timezone_apiapp">JSON ARM Template</a> </p>
+
+<p>Another service of our World Application is called "Time". What this service does is to inform the full date and time (e.g.: 15:56 on Tuesday 17th November 2015 at America/Sao_Paulo), as it receives a request containing an timezone region (e.g.: America/Sao_Paulo). This very simple code is written in PHP...</p>
+
+<h3>
+<a id="aroundcornersworldapp" class="anchor" href="#aroundcornersworldapp" aria-hidden="true"><span class="octicon octicon-link"></span></a><em>AroundCornersWorldApp</em>
+</h3>
+
+<p><a href="https://github.com/msleal/frontend_webapp">Code Repository</a> | <a href="https://github.com/msleal/arm_templates/tree/master/frontend_webapp">JSON ARM Template</a> </p>
+
+<p>This is the FrontEnd WEB Application, and the "face" of the AroundCorners World App. The main page is a simple HTML WEB page that use public and app specific assets files (e.g.: CSS and Image files), that are hosted on public sites or Azure Blob Storage. This is the page that references the two PHP pages that use the two above API's (map.php and time.php). One of the important learning points here is that two or more (e.g.: dozens microservices/API's), are the recommended way to build a scalable and resilient web application. The idea here is that more API services can be added to the AroundCorners World App, as the architecture provides the general structure to it. Look that the API's used on the application use different languages (NodeJS and PHP), and that does not impact the overall solution, as the communication between them is always JSON. Many popular web applications (e.g.: e-commerce sites) are build with this principle, and as you build strong and popular web services/api's for your own utilization, you can use <a href="https://azure.microsoft.com/en-us/documentation/articles/api-management-get-started/">Azure API Management</a> for example, to expose these API's to be consumed (and paid!) by customers. </p>
+
+<p>Other minor concepts and recommendations are implemented in this example app, as well as others that should be integrated over time (e.g.: Add Azure CDN for assets and Azure API Management to profit from our API's). This should be on ongoing and exciting project, where I plan to add and integrate Azure Cloud features and services to help new or experienced IT Pro's, to help the understanding and how to leverage the featureful Microsoft Azure Cloud services. As Cloud services are evolving really fast, the idea is that anyone can find in this project, at least one feature or point of view that can be of benefit. Just hope that ends up being true... </p>
+
+<blockquote>
+<p><strong>IMPORTANT</strong>: The main point of this project <strong>IS NOT</strong> focused on the "coding" per se, or any specific programming techniques or algorithm. All the coding and algorithms used here have the main purpose to create working parts to demonstrate an architectural concept and/or to have minimal application functionalities. So, users/readers/developers and etc can correlate this example solution presented here with their own projects and use cases. The code here in a specific API can be deliberately wrong, for example, to show how an resilient application should handle such scenario; or to have an infinite loop or literal <strong>sleeping</strong> code to discuss Micro-services SLA's and application behavior. Well, other coding can just be <strong>plain wrong</strong> by the simple reason that I'm a really bad programmer and cannot see any difference between O(n) and O(log n).     </p>
+</blockquote>
+
+<h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+<p>November/2015 - Copyright(c) <strong>Marcelo Leal</strong> (<a href="https://github.com/msleal" class="user-mention">@msleal</a>). </p>
+
+<p>If you are fast, you could try following me on <a href="https://twitter.com/msleal">twitter</a></p>
+
+<h3>
+<a id="use-at-your-own-risk" class="anchor" href="#use-at-your-own-risk" aria-hidden="true"><span class="octicon octicon-link"></span></a>USE AT YOUR OWN RISK</h3>
+
+<p>This project was created to help users to get used to cloud concepts, architectural patterns and recommended practices. Both App API Applications on this example project are publicly accessible as the purpose is to easy showcase the API's response, and etc. For production use you may should take security into consideration, and probably add some kind of access control to your API's (e.g.: Token). I plan to add some example of this when I do integrate the Azure API Management into this project. Another option for much better security, is to use <a href="https://azure.microsoft.com/en-us/blog/introducing-app-service-environment/">App Service Environments</a>, that can be deployed into your own (and private) VNET. </p>
+
+<p>Be aware that cloud services such as Microsoft Azure are commercial offers, and so any solution deployed (this project included) on the Microsoft Azure platform, may incur fees/charges and a billing statement at the end of the month. That being said, there are awesome offers to test drive the platform that users can benefit. But for any pricing official information and before using/deploying any content of AroundCorners World Application Example project, take a look at: <a href="https://azure.microsoft.com/en-us/pricing/">https://azure.microsoft.com/en-us/pricing/</a>.</p>
+
+<h3>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>LICENSE</h3>
+
+<p>The MIT License (MIT)
+Copyright (c) 2015 Marcelo Leal</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-70198439-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

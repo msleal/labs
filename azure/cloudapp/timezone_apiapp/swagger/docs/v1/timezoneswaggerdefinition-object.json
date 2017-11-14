@@ -1,0 +1,92 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "AroundCorners Timezone API",
+        "description": "A Timezone API from the AroundCorners World Application",
+        "termsOfService": "http://github.com/msleal/timezone_apiapp",
+        "contact": {
+            "name": "Marcelo Leal"
+        },
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "host": "aroundcornerstimezoneapi.azurewebsites.net",
+    "basePath": "/",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Returns date and time based on timezone region requested.",
+                "operationId": "getTime",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "tz",
+                        "in": "query",
+                        "description": "tags to filter by",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "time response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Tz"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Tz": {
+            "type": "object",
+            "required": [
+                "time"
+            ],
+            "properties": {
+                "time": {
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
