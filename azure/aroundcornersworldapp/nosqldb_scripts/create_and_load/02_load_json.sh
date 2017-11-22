@@ -1,18 +1,35 @@
 #!/bin/bash
 #byLeal
 
-# This is a very, very simple script to load JSON files into DocumentDB or MongoDB.
+# This is a very, very simple script to load JSON files into CosmosDB or MongoDB.
 # IMPORTANT: It's assumed that the destination collection is empty.
 # Copyright(c) - Marcelo Leal   
 
-## VARS
-# You should edit the following variables to fit your deployment...
-DB="prod";
-COLLECTION="cities";
+## Database hostname...
+if [ $# -lt 1 ]; then
+   echo "Error: You must provide a mongodb/cosmosdb hostname"
+   exit 1
+fi
 
-#MongoDB
+DB="$1";
+COLLECTION="cities";
+MONGOIMPORT="/usr/local/bin/mongodb-linux-x86_64-ubuntu1604-3.4.10/bin/mongoimport"
+
+#MongoDB (CosmosDB compatible, the only difference is that CosmosDB by default has strict security requirements)...
 for x in `echo db/import/*`; do 
-    cat $x | tr -d '\n' | mongoimport -d $DB -c $COLLECTION --jsonArray; 
+    if [ $# -gt 1 ]; then
+       #CosmosDB
+       if [ $4 == "--ssl" ]; then
+          # cat $x | tr -d '\n' | mongoimport -h $DB -u $2 -p $3 -c $COLLECTION --jsonArray --ssl --sslAllowInvalidCertificates --numInsertionWorkers 4 
+          $MONGOIMPORT -h $DB -u $2 -p $3 -c $COLLECTION --ssl --sslAllowInvalidCertificates --file $x
+       else
+          echo"Azure Cosmos DB has strict security requirements and standards. Be sure to enable SSL when you interact with your account."
+       fi
+    else
+       #MongoDB
+       # cat $x | tr -d '\n' | mongoimport -h $DB -c $COLLECTION --jsonArray; 
+       $MONGOIMPORT -h $DB -c $COLLECTION --file $x --numInsertionWorkers 8
+    fi
 done
 
 #DocumentDB (Just one windows command, here is splitted in multiple lines for readability)
