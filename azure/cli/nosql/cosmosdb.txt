@@ -1,0 +1,11 @@
+#Remove old docker instance...
+sudo docker stop `sudo docker ps | grep todoapp | awk '{print $1}'` > /dev/null
+sudo docker rm `sudo docker ps -a | grep todoapp | awk '{print $1}'` > /dev/null
+sudo docker ps -a
+#CosmosDB
+az cosmosdb create --resource-group todoapp --name cosmosdbnosql --kind MongoDB 
+#export COSMOSCONNSTR=`az cosmosdb list-connection-strings --resource-group todoapp --name cosmosdbnosql --output json | grep 'connectionString": "' | awk '{print $2}' | sed 's/,//' | sed 's/"//g'`
+
+#Container TODO App accessing Cosmosdb...
+sudo docker run -d --env DB="`az cosmosdb list-connection-strings --resource-group todoapp --name cosmosdbnosql --output json | grep 'connectionString": "' | awk '{print $2}' | sed 's/,//' | sed 's/"//g'`" -p 80:3000 --name todoapp msleal/todoapp
+sudo docker ps
