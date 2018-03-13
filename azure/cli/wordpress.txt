@@ -1,0 +1,10 @@
+#Azure Database for MySQL
+az group create --name WORDPRESS --location "Brazil South"
+az mysql server create --resource-group WORDPRESS --name wpmysqldb2018 --location brazilsouth --admin-user myadmin --admin-password "Th1s1sapassw0rd" --sku-name GP_Gen4_2 --version 5.7
+az mysql server firewall-rule create --resource-group WORDPRESS --server wpmysqldb2018 --name MyServerIPAddress --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+az mysql server update --resource-group wordpress --name wpmysqldb2018 --ssl-enforcement Disabled
+az mysql server show --resource-group WORDPRESS --name wpmysqldb2018
+
+az appservice plan create --name WPPLAN --resource-group WORDPRESS --is-linux --location "Brazil South" --sku S1 --number-of-workers 1
+az webapp create --name WPWEBAPP --resource-group WORDPRESS --plan WPPLAN -i appsvc/apps:wordpress-0.3
+
