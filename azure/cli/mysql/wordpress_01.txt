@@ -5,6 +5,7 @@ az mysql server firewall-rule create --resource-group WORDPRESS --server wpmysql
 az mysql server update --resource-group wordpress --name wpmysqldb2018 --ssl-enforcement Disabled
 az mysql server show --resource-group WORDPRESS --name wpmysqldb2018
 
-az appservice plan create --name WPPLAN --resource-group WORDPRESS --is-linux --location "Brazil South" --sku S1 --number-of-workers 1
-az webapp create --name WPWEBAPP --resource-group WORDPRESS --plan WPPLAN -i appsvc/apps:wordpress-0.3
+#Wordpress on App Service Linux
+#az appservice plan create --name WPPLAN --resource-group WORDPRESS --is-linux --location "Brazil South" --sku S1 --number-of-workers 1
+#az webapp create --name WPWEBAPP --resource-group WORDPRESS --plan WPPLAN -i appsvc/apps:wordpress-0.3
 
