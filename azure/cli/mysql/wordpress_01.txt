@@ -1,11 +1,32 @@
 #Azure Database for MySQL
-az group create --name WORDPRESS --location "Brazil South"
-az mysql server create --resource-group WORDPRESS --name wpmysqldb2018 --location brazilsouth --admin-user myadmin --admin-password "Th1s1sapassw0rd" --sku-name GP_Gen4_2 --version 5.7
-az mysql server firewall-rule create --resource-group WORDPRESS --server wpmysqldb2018 --name MyServerIPAddress --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
-az mysql server update --resource-group wordpress --name wpmysqldb2018 --ssl-enforcement Disabled
-az mysql server show --resource-group WORDPRESS --name wpmysqldb2018
+#Remember to export the MYPASSWD environment variable before execute this script and...
+#Change the IP Address to be the one of your server.
+pwd
+ls
+export RVALUE1=$(( ( RANDOM % 10000 )  + 1 ))
+export RVALUE2=$(( ( RANDOM % 10000 )  + 1 ))
+export HNAME="wpmysqldb${RVALUE1}"
+export ADMNAME="myadmin${RVALUE2}"
+export DBNAME="wordpress"
+az group create --name WORDPRESS --location "Brazil South" --output table
+az mysql server create --resource-group WORDPRESS --name $HNAME --location brazilsouth --admin-user $ADMNAME --admin-password $MYPASSWD --sku-name GP_Gen4_2 --version 5.7 --output table
+az mysql server firewall-rule create --resource-group WORDPRESS --server $HNAME --name MyServerIPAddress --start-ip-address 191.232.191.108 --end-ip-address 191.232.191.108 --output table
+az mysql server update --resource-group wordpress --name $HNAME --ssl-enforcement Disabled --output table
+mysql -u$ADMNAME@$HNAME -e "create database $DBNAME" -h $HNAME.mysql.database.azure.com -p
+
+sudo wget https://wordpress.org/latest.zip
+sudo unzip -q latest.zip
+ls
+sudo rm latest.zip
+sudo mv wordpress/* .
+sudo rmdir wordpress
+ls
+sudo mv wp-config-sample.php wp-config.php
+sudo sed -i "s/database_name_here/$DBNAME/" wp-config.php
+sudo sed -i "s/username_here/$ADMNAME@$HNAME/" wp-config.php
+sudo sed -i "s/password_here/$MYPASSWD/" wp-config.php
+sudo sed -i "s/localhost/$HNAME.mysql.database.azure.com/" wp-config.php
 
 #Wordpress on App Service Linux
 #az appservice plan create --name WPPLAN --resource-group WORDPRESS --is-linux --location "Brazil South" --sku S1 --number-of-workers 1
 #az webapp create --name WPWEBAPP --resource-group WORDPRESS --plan WPPLAN -i appsvc/apps:wordpress-0.3
-
