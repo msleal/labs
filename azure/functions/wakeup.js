@@ -49,12 +49,12 @@ module.exports = function (context) {
             //NOTE: If you do not need them as ENV Vars to pass into the container, ommit the followin block.
             container.environmentVariables = [
                 {
-                    "name": "USERNAME",
-                    "value": process.env.WAKEUP_USERNAME
+                    'name': 'USERNAME',
+                    'value': process.env.WAKEUP_USERNAME
                 },
                 {
-                    "name": "USERPASSWD",
-                    'secretValue': process.env.WAKEUP_USERPASSWD
+                    'name': 'USERPASSWD',
+                    'value': process.env.WAKEUP_USERPASSWD
                 },
                 {
                     'name': 'HOSTADDR',
@@ -65,7 +65,7 @@ module.exports = function (context) {
                     'value': process.env.WAKEUP_SCREENRESOLUTION
                 }
             ];
-
+            
             //Container Properties...
             container.name = w_cname;
             container.image = w_cimage;
@@ -76,7 +76,7 @@ module.exports = function (context) {
                         memoryInGB: 1
                      }
             };
-
+            
             //Ok, let's do it!
             client.containerGroups.createOrUpdate(w_rgroup, w_cname,
                 {
