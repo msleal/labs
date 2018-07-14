@@ -20,7 +20,7 @@ module.exports = function (context) {
     context.log('We are awake!');
 
     //Some APP Settings Vars
-    //These variables we need to have configured as App Settings values in Azure Portal...
+    //These variables we MUST have configured as App Settings values in Azure Portal...
     w_rgroup = process.env.WAKEUP_RGROUP;
     w_cname = process.env.WAKEUP_CNAME + '-' + min;
     w_cimage = process.env.WAKEUP_CIMAGE;
@@ -44,10 +44,32 @@ module.exports = function (context) {
             let client = new ACI(credentials, a_subscriptionid);
             let container = new client.models.Container();
 
+            //Other APP Settings Vars
+            //The configuration of these variables are OPTIONAL as App Settings values in Azure Portal...
+            //NOTE: If you do not need them as ENV Vars to pass into the container, ommit the followin block.
+            container.environmentVariables = [
+                {
+                    "name": "USERNAME",
+                    "value": process.env.WAKEUP_USERNAME
+                },
+                {
+                    "name": "USERPASSWD",
+                    'secretValue': process.env.WAKEUP_USERPASSWD
+                },
+                {
+                    'name': 'HOSTADDR',
+                    'value': process.env.WAKEUP_HOSTADDR
+                },
+                {
+                    'name': 'SCREENRESOLUTION',
+                    'value': process.env.WAKEUP_SCREENRESOLUTION
+                }
+            ];
+
             //Container Properties...
             container.name = w_cname;
             container.image = w_cimage;
-            container.ports = [{port: 80}];
+            //container.ports = [{'port': 8080}];
             container.resources = {
                     requests: {
                         cpu: 1,
@@ -61,6 +83,7 @@ module.exports = function (context) {
                     containers: [container],
                     osType: w_costype,
                     location: w_clocation,
+                    //ipAddress: {'ports': [{'protocol': 'TCP', 'port': 8080}], 'type': 'Public', "dnsNameLabel": w_cname},
                     restartPolicy: 'never'
                 }).then((r) => {
                     context.log('Container launched Successfully');
