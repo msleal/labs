@@ -41,7 +41,6 @@ module.exports = function (context) {
 
             /* Let's do our job... */
             client.virtualMachines.start(w_rgroup, w_cname).then((r) => {
-
                 }).then((r) => {
                     context.log('Virtual Machine started Successfully');
                     context.log('Time to sleep... again!');

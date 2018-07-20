@@ -4,13 +4,12 @@ July 2018
 https://www.aroundcorners.com.br/blog/about.html
 
 ----------------------------------------------------------------------------------
-NodeJS Function to delete a Container Group for Short lived tasks.
+NodeJS Function to Deallocate a Virtual Machine.
 ----------------------------------------------------------------------------------
-Based on the example written by R. Tyler: http://unethicalblogger.com
 */
 
 module.exports = function (context) {
-    const ACI = require('azure-arm-containerinstance');
+    const VM = require('azure-arm-compute');
     const AZ = require('ms-rest-azure');
 
     //When you interrupted our nap...
@@ -21,9 +20,8 @@ module.exports = function (context) {
 
     //Some APP Settings Vars
     //These variables we MUST have configured as App Settings values in Azure Portal...
-    w_rgroup = process.env.WAKEUP_RGROUP;
-    w_cname = process.env.WAKEUP_CNAME;
-    w_clocation = process.env.WAKEUP_CLOCATION;
+    w_rgroup = process.env.START_RGROUP;
+    w_cname = process.env.START_CNAME;
     a_clientid = process.env.AZURE_CLIENTID;
     a_clientsecret = process.env.AZURE_CLIENTSECRET;
     a_tenantid = process.env.AZURE_TENANTID;
@@ -39,16 +37,16 @@ module.exports = function (context) {
                 throw err;
             }
 
-            let client = new ACI(credentials, a_subscriptionid);
+            let client = new VM(credentials, a_subscriptionid);
 
-            /* First delete the previous existing container group if it exists */
-            client.containerGroups.deleteMethod(w_rgroup, w_cname).then((r) => {
+            /* Let's do our job... */
+            client.virtualMachines.deallocate(w_rgroup, w_cname).then((r) => {
                 }).then((r) => {
-                    context.log('Container Group deleted Successfully');
+                    context.log('Virtual Machine deallocated Successfully');
                     context.log('Time to sleep... again!');
                     context.done();
                 }).catch((r) => {
-                    context.log('ERROR Deleting Container:', r);
+                    context.log('ERROR Deallocating Virtual Machine:', r);
                     context.done();
             });
     });
